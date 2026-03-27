@@ -1,26 +1,42 @@
+// Get all buttons
 const buttons = document.querySelectorAll(".btn");
-let currentAudio = null;
 
-// Create an audio element and add it to DOM
-const audioEl = document.createElement("audio");
-document.body.appendChild(audioEl);
+// Store audio objects
+const sounds = {
+    sound1: new Audio("sounds/sound1.mp3"),
+    sound2: new Audio("sounds/sound2.mp3"),
+    sound3: new Audio("sounds/sound3.mp3"),
+    sound4: new Audio("sounds/sound4.mp3")
+};
 
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    const soundFile = button.dataset.sound;
-
-    // Stop current audio
-    audioEl.pause();
-    audioEl.currentTime = 0;
-
-    // Stop button
-    if (button.classList.contains("stop")) {
-      audioEl.src = "";
-      return;
+// Function to stop all sounds
+function stopAllSounds() {
+    for (let key in sounds) {
+        sounds[key].pause();
+        sounds[key].currentTime = 0;
     }
+}
 
-    // Play selected audio
-    audioEl.src = `sounds/${soundFile}`;
-    audioEl.play();
-  });
+// Add click events
+buttons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        // If stop button clicked
+        if (button.classList.contains("stop")) {
+            stopAllSounds();
+            return;
+        }
+
+        // Get sound name
+        const soundName = button.getAttribute("data-sound");
+
+        // Stop others first
+        stopAllSounds();
+
+        // Play selected sound
+        sounds[soundName].play();
+
+    });
+
 });
