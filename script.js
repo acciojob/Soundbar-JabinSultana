@@ -1,41 +1,40 @@
-// Get all buttons
+// Get buttons
 const buttons = document.querySelectorAll(".btn");
 
-// Store audio objects
-const sounds = {
-    sound1: new Audio("sounds/sound1.mp3"),
-    sound2: new Audio("sounds/sound2.mp3"),
-    sound3: new Audio("sounds/sound3.mp3"),
-    sound4: new Audio("sounds/sound4.mp3")
-};
+// Get audio elements
+const audios = [
+    document.getElementById("audio1"),
+    document.getElementById("audio2"),
+    document.getElementById("audio3"),
+    document.getElementById("audio4"),
+    document.getElementById("audio5"),
+    document.getElementById("audio6")
+];
 
-// Function to stop all sounds
+// Stop all audio
 function stopAllSounds() {
-    for (let key in sounds) {
-        sounds[key].pause();
-        sounds[key].currentTime = 0;
-    }
+    audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
 }
 
-// Add click events
-buttons.forEach(button => {
+// Button click events
+buttons.forEach((button, index) => {
 
     button.addEventListener("click", () => {
 
-        // If stop button clicked
+        // If stop button
         if (button.classList.contains("stop")) {
             stopAllSounds();
             return;
         }
 
-        // Get sound name
-        const soundName = button.getAttribute("data-sound");
-
-        // Stop others first
+        // Stop others
         stopAllSounds();
 
-        // Play selected sound
-        sounds[soundName].play();
+        // Play selected audio
+        audios[index].play();
 
     });
 
